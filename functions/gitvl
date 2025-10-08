@@ -1,0 +1,34 @@
+function gitvl
+    # Staged files
+    set staged (git diff --cached --name-only)
+    if test (count $staged) -gt 0
+        echo "✅ Staged files:"
+        for f in $staged
+            echo "   $f"
+        end
+    else
+        echo "✅ Staged files: none"
+    end
+
+    # Unstaged files
+    set unstaged (git diff --name-only)
+    if test (count $unstaged) -gt 0
+        echo "✏️ Modified (unstaged):"
+        for f in $unstaged
+            echo "   $f"
+        end
+    else
+        echo "✏️ Modified (unstaged): none"
+    end
+
+    # Untracked files
+    set untracked (git ls-files --others --exclude-standard)
+    if test (count $untracked) -gt 0
+        echo "➕ Untracked files:"
+        for f in $untracked
+            echo "   $f"
+        end
+    else
+        echo "➕ Untracked files: none"
+    end
+end

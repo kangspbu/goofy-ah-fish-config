@@ -1,0 +1,33 @@
+source /usr/share/cachyos-fish-config/cachyos-config.fish
+
+
+# Android SDK paths
+set -x ANDROID_HOME ~/Android/Sdk
+set -x PATH $ANDROID_HOME/cmdline-tools/latest/bin $ANDROID_HOME/platform-tools $PATH
+set -x JAVA_HOME /usr/lib/jvm/java-17-openjdk
+set -x PATH $JAVA_HOME/bin $PATH
+set -x PATH /home/se/dev/flutter/bin/cache/dart-sdk/bin /home/se/dev/flutter/bin $PATH
+set -x PATH $PATH ~/dev/flutter/bin
+
+set -x CHROME_EXECUTABLE /usr/bin/brave
+
+set -gx GTK_THEME Adwaita:dark
+set -gx QT_STYLE_OVERRIDE Adwaita-Dark
+
+function rn_cleanup
+    echo "Killing Gradle/Java, Node, adb..."
+    pkill -f java
+    pkill -f node
+    adb kill-server
+    echo "Done."
+end
+
+starship init fish | source
+
+
+# Start X at login
+if status is-login
+    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+        exec startx
+    end
+end
