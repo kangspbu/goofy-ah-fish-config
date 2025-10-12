@@ -31,3 +31,4 @@ if status is-login
         exec startx
     end
 end
+set -gx TERMINAL alacritty
